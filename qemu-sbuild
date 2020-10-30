@@ -16,6 +16,7 @@ try:
         }[MACHINE]
 except KeyError as e:
     print(f'Unsupported machine type {MACHINE}')
+    sys.exit(1)
 # Defaults
 CORES = psutil.cpu_count(logical=False)
 DIST = 'unstable'
