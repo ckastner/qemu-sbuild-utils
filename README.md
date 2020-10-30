@@ -22,3 +22,31 @@ As one might have guessed by the mode name, the very same images can also be
 used to run [autopkgtest](https://salsa.debian.org/ci-team/autopkgtest) tests,
 for the build result, including those with the `breaks-testbed` or
 `isolation-machine` restrictions.
+
+**Work for architectures other than `amd64` and `i386` is still in progress,
+although I expect it will be added soon.**
+
+
+Utilities
+---------
+
+### qemu-sbuild
+
+A light-weight wrapper around `sbuild`. It understands a few VM-specific
+arguments (CPUs, RAM, etc.), and passes all remaining arguments through to
+`sbuild`.
+
+Note that some `sbuild` options don't work in `autopkgtest` mode yet. For
+example, it is not yet possible to drop into a shell after a failed build (the
+bridge code does not support this yet).
+
+See `qemu-sbuild -h` for more info.
+
+
+qemu-sbuild-update
+------------------
+
+An `sbuild-update` analog. Launches an image, and uses `python3-pexpect` to
+update all packages.
+
+Expects only the image name as argument.
