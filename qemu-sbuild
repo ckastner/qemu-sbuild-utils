@@ -8,12 +8,15 @@ import psutil
 import sys
 
 
+SUPPORTED_ARCHS = {
+    'x86_64': 'amd64',
+    'i386': 'i386'
+}
+
+
 MACHINE = platform.machine()
 try:
-    ARCH = {
-            'x86_64': 'amd64',
-            'i386': 'i386'
-        }[MACHINE]
+    SUPPORTED_ARCHS[MACHINE]
 except KeyError as e:
     print(f'Unsupported machine type {MACHINE}')
     sys.exit(1)
@@ -26,7 +29,6 @@ IMAGEDIR = os.environ.get('IMAGEDIR', '/var/cache/qemu-sbuild')
 def main():
     # init options
     parser = argparse.ArgumentParser(description='QEMU-based sbuild launcher')
-
     parser.add_argument('--arch', action='store', default=ARCH)
     parser.add_argument('--clean', action='store_true')
     parser.add_argument('-d', '--dist', action='store', default=DIST)
@@ -35,7 +37,6 @@ def main():
     parser.add_argument('--ram', metavar='MiB', action='store', default=8192)
     parser.add_argument('--cpus', metavar='cpus', action='store', default=CORES)
     parser.add_argument('--noexec', action='store_true')
-
     parsed_args, unparsed_args = parser.parse_known_args()
 
     if parsed_args.image:
@@ -66,6 +67,7 @@ def main():
     if parsed_args.autopkgtest_debug:
         args += ['--autopkgtest-virt-server-opt', '--debug']
 
+    # Pass on the remaining arguments to sbuild
     args += unparsed_args
 
     print(' '.join(str(a) for a in args))
