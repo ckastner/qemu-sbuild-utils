@@ -1,5 +1,8 @@
 #!/bin/bash
-# Customizes a base image after initialization by qemu-sbuild-create
+# SPDX-License-Identifier: BSD-3-Clause
+# Author: Christian Kastner <ckk@kvr.at>
+
+
 set -e
 umask 0022
 
