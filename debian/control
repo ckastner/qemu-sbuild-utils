@@ -13,6 +13,7 @@ Architecture: all
 Depends: autopkgtest,
          qemu-system-x86,
          qemu-utils,
+         python3-psutil,
          sbuild,
          ${misc:Depends},
          ${python3:Depends},
