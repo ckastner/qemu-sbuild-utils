@@ -32,10 +32,10 @@ then
 	cp $QSC_SKEL/. $VMROOT/root
 fi
 
-if [ -n "$QSC_ADD_PACKAGES" ]
+if [ -n "$QSC_INSTALL_PACKAGES" ]
 then
 	echo "Installing additional packages" 
-	chroot $VMROOT apt-get install --quiet --assume-yes $QSC_ADD_PACKAGES
+	chroot $VMROOT apt-get install --quiet --assume-yes $QSC_INSTALL_PACKAGES
 fi
 
 echo "Updating GRUB menu"

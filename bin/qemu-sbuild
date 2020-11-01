@@ -18,7 +18,7 @@ SUPPORTED_ARCHS = {
 
 MACHINE = platform.machine()
 try:
-    SUPPORTED_ARCHS[MACHINE]
+    ARCH = SUPPORTED_ARCHS[MACHINE]
 except KeyError as e:
     print(f'Unsupported machine type {MACHINE}')
     sys.exit(1)
