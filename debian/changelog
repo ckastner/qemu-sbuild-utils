@@ -1,0 +1,5 @@
+qemu-sbuild-tools (0.0.1) unstable; urgency=medium
+
+  * Initial release.
+
+ -- Christian Kastner <ckk@debian.org>  Sun, 01 Nov 2020 15:50:21 +0100

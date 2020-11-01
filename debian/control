@@ -1,0 +1,27 @@
+Source: qemu-sbuild-tools
+Section: devel
+Priority: optional
+Maintainer: Christian Kastner <ckk@debian.org>
+Build-Depends: debhelper-compat (= 12),
+               dh-python,
+               python3-all,
+Rules-Requires-Root: no
+Standards-Version: 4.5.0
+
+Package: qemu-sbuild-tools
+Architecture: all
+Depends: autopkgtest,
+         qemu-system-x86,
+         qemu-utils,
+         sbuild,
+         ${misc:Depends},
+         ${python3:Depends},
+Description: Utilities for using sbuild with QEMU images
+ These utilities facilitate the use of sbuild together with QEMU images using
+ sbuild's  --chroot-mode=autopkgtest.
+ .
+ The following utilities are provided:
+ .
+   * qemu-sbuild: light-weight wrapper around sbuild
+   * qemu-sbuild-update: like sbuild-update, but for QEMU images
+   * qemu-sbuild-create: image creation script (wraps autopkgtest-build-qemu)
