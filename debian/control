@@ -1,4 +1,4 @@
-Source: qemu-sbuild-tools
+Source: qemu-sbuild-utils
 Section: devel
 Priority: optional
 Maintainer: Christian Kastner <ckk@debian.org>
@@ -8,7 +8,7 @@ Build-Depends: debhelper-compat (= 12),
 Rules-Requires-Root: no
 Standards-Version: 4.5.0
 
-Package: qemu-sbuild-tools
+Package: qemu-sbuild-utils
 Architecture: all
 Depends: autopkgtest,
          qemu-system-x86,

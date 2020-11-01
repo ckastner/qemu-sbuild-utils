@@ -1,4 +1,4 @@
-qemu-sbuild-tools (0.0.1) unstable; urgency=medium
+qemu-sbuild-utils (0.0.1) unstable; urgency=medium
 
   * Initial release.
 
