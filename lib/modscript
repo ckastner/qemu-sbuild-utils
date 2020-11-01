@@ -34,8 +34,18 @@ fi
 
 if [ -n "$QSC_INSTALL_PACKAGES" ]
 then
-	echo "Installing additional packages" 
+	echo "Installing additional packages"
 	chroot $VMROOT apt-get install --quiet --assume-yes $QSC_INSTALL_PACKAGES
+fi
+
+if [ -n "$QSC_EXTRA_DEBS" ]
+then
+	echo "Installing extra .debs"
+	VMTMP=`mktemp -d -p $VMROOT`
+	cp -t $VMTMP $QSC_EXTRA_DEBS
+	chroot $VMROOT dpkg --recursive -i `basename $VMTMP`
+	chroot $VMROOT apt-get update
+	rm -rf $VMTMP
 fi
 
 echo "Updating GRUB menu"
