@@ -1,3 +1,16 @@
+qemu-sbuild-utils (0.0.2) unstable; urgency=medium
+
+  * qemu-sbuild-update: Add --snapshot option
+  * qemu-sbuild-create: --skel must recurse and preserve
+  * Add help texts to the argparse options
+  * Create man pages
+  * Restrict architecture to amd64 for now
+  * Add help2man, python3-pexpect, python3-psutil to Build-Depends
+  * Add README suggestion for KVM support
+  * Add Homepage and Vcs-* fields
+
+ -- Christian Kastner <ckk@debian.org>  Tue, 03 Nov 2020 22:28:12 +0100
+
 qemu-sbuild-utils (0.0.1) unstable; urgency=medium
 
   * Initial release.
