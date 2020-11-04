@@ -12,30 +12,30 @@ If the distribution ends with \fB-backports\fR, sources.list will contain
 entries for both the distribution and its base, eg: buster\-backports and
 buster.
 .SH EXAMPLES
-$ sudo qemu\-sbuild\-create unstable http://deb.debian.org/debian
+\fB$ sudo qemu\-sbuild\-create unstable http://deb.debian.org/debian\fR
 .PP
 This will create an image \fBunstable\-autopkgtest\-amd64.img\fR (assuming
 that the host architecture is amd64) with the unstable distribution.
 .PP
-$ sudo qemu\-sbuild\-create buster\-backports http://deb.debian.org/debian
+\fB$ sudo qemu\-sbuild\-create buster\-backports http://deb.debian.org/debian\fR
 .PP
 This will create an image \fBbuster\-backports\-autopkgtest\-amd64.img\fR,
 with sources.list entries for both buster and buster-backports.
 .PP
-$ sudo qemu\-sbuild\-create \-\-skel DIR unstable http://deb.debian.org/debian
+\fB$ sudo qemu\-sbuild\-create \-\-skel DIR unstable http://deb.debian.org/debian\fR
 .PP
 The files in \fBDIR\fR will be copied into /root (that is, root's $HOME). This
 can be used, for example, to copy an \fB.ssh/authorized_keys\fR file, so that
 one can connect to the running image using SSH (assuming openssh\-server is
 installed).
 .PP
-$ sudo qemu\-sbuild\-create \-\-install\-packages openssh\-server unstable http://deb.debian.org/debian
+\fB$ sudo qemu\-sbuild\-create \-\-install\-packages openssh\-server unstable http://deb.debian.org/debian\fR
 .PP
 This would install openssh\-server. Another popular option to pre\-install this
 way would be debhelper, as it is a build dependency of the vast majority of
 Debian packages.
 .PP
-$ sudo qemu\-sbuild\-create \-\-extra\-deb FOO.deb unstable http://deb.debian.org/debian
+\fB$ sudo qemu\-sbuild\-create \-\-extra\-deb FOO.deb unstable http://deb.debian.org/debian\fR
 .PP
 This would install the package \fBFOO.deb\fR from the local filesystem.
 Useful, for example, to install additional keyring packages.

@@ -1,5 +1,5 @@
 .SH EXAMPLES
-$ qemu\-sbuild\-update unstable-autopkgtest\-amd64.img
+\fB$ qemu\-sbuild\-update unstable-autopkgtest\-amd64.img\fR
 .PP
 This will run a VM with the image \fBunstable\-autopkgtest\-amd64.img\fR, and
 run \fBapt\-get\fR update, upgrade, clean, and finally autoremove in the image.

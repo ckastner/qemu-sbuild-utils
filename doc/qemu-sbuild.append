@@ -14,10 +14,10 @@ As a futher consequence of this chroot mode, what is stated in
 autopkgtest\-virt\-qemu(1) generally also holds here.
 
 .SH EXAMPLES
-$ qemu\-sbuild \-d unstable \-s \-\-arch\-all FOO.dsc
+\fB$ qemu\-sbuild \-d unstable \-s \-\-arch\-all FOO.dsc\fR
 .PP
 This will build the package \fBFOO.dsc\fR using \fBunstable\fR as the
-\fIDistribution\fR in the generated .changes file.
+Distribution in the generated .changes file.
 .PP
 Because the \fB\-\-image\fR option was not specified, the image
 \fB$IMAGEDIR/unstable\-autopkgtest\-amd64.img\fR will be used to build the
