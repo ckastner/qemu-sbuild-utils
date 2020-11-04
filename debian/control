@@ -9,7 +9,7 @@ Rules-Requires-Root: no
 Standards-Version: 4.5.0
 
 Package: qemu-sbuild-utils
-Architecture: all
+Architecture: amd64
 Depends: autopkgtest,
          qemu-system-x86,
          qemu-utils,
