@@ -10,6 +10,9 @@ Build-Depends: debhelper-compat (= 12),
                python3-psutil,
 Rules-Requires-Root: no
 Standards-Version: 4.5.0
+Homepage: https://github.com/ckastner/qemu-sbuild-utils
+Vcs-Git: https://github.com/ckastner/qemu-sbuild-utils.git
+Vcs-Browser: https://github.com/ckastner/qemu-sbuild-utils
 
 Package: qemu-sbuild-utils
 Architecture: amd64
