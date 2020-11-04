@@ -30,10 +30,16 @@ def make_snapshot(image):
 
 def main():
     # init options
-    parser = argparse.ArgumentParser(description='QEMU-based sbuild launcher updater')
-
-    parser.add_argument('--noexec', action='store_true')
-    parser.add_argument('image', action='store')
+    parser = argparse.ArgumentParser(
+        description="sbuild-update analog for QEMU images."
+    )
+    parser.add_argument('--noexec', action='store_true',
+        help="Don't actually do anything. Just print the command string that "
+             "would be executed, and then exit.")
+    parser.add_argument('image', action='store',
+        help="Image path. Will first be tried as-is, and if no image exists "
+             "there, then $IMAGEDIR/<image> is tried."
+    )
 
     parsed_args = parser.parse_args()
 

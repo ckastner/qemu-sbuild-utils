@@ -1,0 +1,9 @@
+.SH EXAMPLES
+$ qemu\-sbuild\-update unstable-autopkgtest\-amd64.img
+.PP
+This will run a VM with the image \fBunstable\-autopkgtest\-amd64.img\fR, and
+run \fBapt\-get\fR update, upgrade, clean, and finally autoremove in the image.
+.SH ENVIRONMENT
+The \fBimage\fR will first be treated as a path. If a file exists at that path,
+it is used. Otherwise, \fBimage\fR will be looked for in \fB$IMAGEDIR\fR, or
+\fB/var/cache/qemu\-sbuild\fR if \fB$IMAGEDIR\fR is unset.
