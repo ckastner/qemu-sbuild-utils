@@ -33,6 +33,10 @@ def main():
     parser = argparse.ArgumentParser(
         description="sbuild-update analog for QEMU images."
     )
+    parser.add_argument('--snapshot', action='store_true',
+        help="Create a snapshot of the image before updating it. Useful for "
+             "reproducibility purposes."
+    )
     parser.add_argument('--noexec', action='store_true',
         help="Don't actually do anything. Just print the command string that "
              "would be executed, and then exit.")
@@ -71,7 +75,7 @@ def main():
 
     print(' '.join(str(a) for a in args))
     if not parsed_args.noexec:
-        if not make_snapshot(image):
+        if parsed_args.snapshot and not make_snapshot(image):
             return
         child = pexpect.spawn(' '.join(args), encoding='utf-8')
         child.timeout = 240
