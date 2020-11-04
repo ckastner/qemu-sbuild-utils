@@ -1,16 +1,15 @@
-.SH "APT CACHE"
+.SH "MIRROR"
 It is \fBhighly recommended\fR that you use an APT cache, like approx(8), or
 apt\-cacher\-ng(8), on the \fBlocal\fR machine (so that the VM guest can
-access it). This will dramatically speed up the package build process. On the
-author's local machine, installing the build dependencies of even larger
-packages takes only a few seconds.
+access it) as a mirror. This will dramatically speed up the package build
+process. On the author's local machine, installing the build dependencies of
+even larger packages takes only a few seconds.
 .SH "SPECIAL CASES"
-If the distribution is \fBexperimental\fR, sources.list will contain entries
-for both \fBexperimental\fR and \fBunstable\fR.
+If the distribution is \fBexperimental\fR, \fIsources.list\fR will contain
+entries for both \fBexperimental\fR and \fBunstable\fR.
 .PP
-If the distribution ends with \fB-backports\fR, sources.list will contain
-entries for both the distribution and its base, eg: buster\-backports and
-buster.
+If the distribution ends with \fB-backports\fR, \fIsources.list\fR will contain
+entries for both the distribution and its base.
 .SH EXAMPLES
 \fB$ sudo qemu\-sbuild\-create unstable http://deb.debian.org/debian\fR
 .PP
@@ -20,7 +19,7 @@ that the host architecture is amd64) with the unstable distribution.
 \fB$ sudo qemu\-sbuild\-create buster\-backports http://deb.debian.org/debian\fR
 .PP
 This will create an image \fBbuster\-backports\-autopkgtest\-amd64.img\fR,
-with sources.list entries for both buster and buster-backports.
+with \fIsources.list\fR entries for both buster and buster-backports.
 .PP
 \fB$ sudo qemu\-sbuild\-create \-\-skel DIR unstable http://deb.debian.org/debian\fR
 .PP
@@ -31,9 +30,11 @@ installed).
 .PP
 \fB$ sudo qemu\-sbuild\-create \-\-install\-packages openssh\-server unstable http://deb.debian.org/debian\fR
 .PP
-This would install openssh\-server. Another popular option to pre\-install this
-way would be debhelper, as it is a build dependency of the vast majority of
-Debian packages.
+This would install openssh\-server. The package will be downloaded in the
+target environment using 'apt-get'.
+.PP
+A popular package to pre\-install this way would be \fBdebhelper\fR, as it is a
+build dependency of the vast majority of Debian packages.
 .PP
 \fB$ sudo qemu\-sbuild\-create \-\-extra\-deb FOO.deb unstable http://deb.debian.org/debian\fR
 .PP

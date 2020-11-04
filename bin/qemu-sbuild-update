@@ -37,8 +37,8 @@ def main():
         help="Don't actually do anything. Just print the command string that "
              "would be executed, and then exit.")
     parser.add_argument('image', action='store',
-        help="Image path. Will first be tried as-is, and if no image exists "
-             "there, then $IMAGEDIR/<image> is tried."
+        help="Image path. Will be tried first as-is, and if no image exists "
+             "at that location, then $IMAGEDIR/<image> is tried."
     )
 
     parsed_args = parser.parse_args()

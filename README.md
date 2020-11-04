@@ -5,15 +5,16 @@ These are a set of scripts that facilitate building Debian packages in a QEMU
 instance using sbuild's `--chroot-mode=autopkgtest`.
 
 While it may seem like overkill to launch a QEMU instance just to build a
-package, there are numerous advantanges:
+package, the overhead in relation to total build time is negligible, and there
+are numerous advantages:
 
 * **Diverse environments**. You can build on any architecture for which a
   bootable image can be created (although you might not be able to use
   acceleration, for example when booting an `arm64` image on an `amd64` host).
-  You can use any supported distribution.
+  You can use any distribution by `debootstrap`.
 * **Isolation**. You can go crazy within the instance without affecting the
   host on which it is launched (barring security vulnerabilities in QEMU, of
-  course). Test suites that modify the system can be run free of concern.
+  course). Test suites that modify the system can be run without concern.
 * **Snapshots**. You can save and reload the state of any running instance.
   This is especially useful when attempting to reproduce something: you don't
   need to _recreate_ a particular environment, you can just _save_ it.
@@ -34,7 +35,9 @@ Utilities
 
 A light-weight wrapper around `sbuild`. It understands a few VM-specific
 arguments (CPUs, RAM, etc.), and passes all remaining arguments through to
-`sbuild`.
+`sbuild`. Images are used in snapshot mode, so changes are not persisted. This
+not only makes the VMs fast, the image can also be used concurrently by
+multiple processes.
 
 Note that some `sbuild` options don't work in `autopkgtest` mode yet. For
 example, it is not yet possible to drop into a shell after a failed build (the
@@ -45,8 +48,8 @@ See `qemu-sbuild -h` for more info.
 
 ### qemu-sbuild-update
 
-An `sbuild-update` analog. Launches an image, and uses `python3-pexpect` to
-update all packages.
+An `sbuild-update` analog. Launches an image, and runs `apt-get update`,
+`upgrade`, `clean`, an `autoremove`.
 
 Expects only the image name as argument.
 
@@ -65,10 +68,9 @@ Acceleration
 ------------
 
 By adding the build user to the `kvm` group, `qemu-sbuild` can operate with
-near-native performance on systems where KVM is supported.
+near-native performance on systems where KVM is supported:
 
 ```
 $ sudo gpasswd -a <build-user> kvm
+# Logout, and login
 ```
-
-

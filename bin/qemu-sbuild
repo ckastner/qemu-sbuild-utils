@@ -40,7 +40,8 @@ def main():
     )
     parser.add_argument('--arch', action='store', default=ARCH,
         help="Architecture to use. Default is the host architecture. "
-            f"Currently supported: {', '.join(SUPPORTED_ARCHS.values())}."
+             "Currently supported architectures are: "
+            f"{', '.join(SUPPORTED_ARCHS.values())}."
     )
     parser.add_argument('-d', '--dist', action='store', default=DIST,
         help=f"Distribution (for the .changes file). Default is '{DIST}'."

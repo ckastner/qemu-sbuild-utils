@@ -60,11 +60,13 @@ def main():
     parser = argparse.ArgumentParser(
         description="Builds images for use with qemu-sbuild and autopkgtest.",
         epilog="Note that qemu-sbuild-create is just a simple wrapper around "
-               "autopkgtest-build-qemu(1) tailored to building use cases."
+               "autopkgtest-build-qemu(1) that automates a few additional "
+               "steps commonly performed with package-building images."
     )
     parser.add_argument('--arch', action='store', default=ARCH,
         help="Architecture to use. Default is the host architecture. "
-            f"Currently supported: {', '.join(SUPPORTED_ARCHS.values())}."
+             "Currently supported architectures are: "
+            f"{', '.join(SUPPORTED_ARCHS.values())}."
     )
     parser.add_argument('--install-packages', action='store',
         help="Comma-separated list of additional packages to install in the "
@@ -102,12 +104,12 @@ def main():
              "qemu(1) command string that would be executed, and then exit."
     )
     parser.add_argument('distribution', action='store',
-        help="The distribution to install."
+        help="The distribution to debootstrap."
     )
     parser.add_argument('mirror', action='store',
         help="The mirror to use for the installation. Note that the mirror "
-             "will also be used for the sources.list file in the VM. This "
-             "should fast, and ideally locally cached."
+             "will also be used for the sources.list file in the VM. See "
+             "MIRROR below."
     )
     parsed = parser.parse_args()
 

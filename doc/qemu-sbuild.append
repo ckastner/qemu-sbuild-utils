@@ -26,8 +26,9 @@ image (assuming that the host architecture is amd64).
 The \fB\-s\fR and \fB\-\-arch\-all\fR aren't known to qemu\-sbuild, and
 are therefore will be passed on through to sbuild for it to use.
 .SH ENVIRONMENT
-When using default image detection (based on the architecture and distribution
-options), \fBqemu\-sbuild\fR looks for images in \fB$IMAGEDIR\fR, or
+When using default image detection (meaning the \fB\-\-image\fR option was not
+used, and therefore the image name is generated using the distribution and
+architecture names), \fBqemu\-sbuild\fR looks for images in \fB$IMAGEDIR\fR, or
 \fB/var/cache/qemu\-sbuild\fR if \fB$IMAGEDIR\fR is unset.
 .SH COPYRIGHT
 Copyright \[co] 2020 Christian Kastner <ckk@kvr.at>
