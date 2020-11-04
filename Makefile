@@ -2,7 +2,7 @@
 # Author: Christian Kastner <ckk@kvr.at>
 
 
-VERSION = 0.0.2
+VERSION = 0.1
 
 
 BINDIR = $(DESTDIR)/usr/bin
