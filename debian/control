@@ -4,7 +4,10 @@ Priority: optional
 Maintainer: Christian Kastner <ckk@debian.org>
 Build-Depends: debhelper-compat (= 12),
                dh-python,
+               help2man,
                python3-all,
+               python3-pexpect,
+               python3-psutil,
 Rules-Requires-Root: no
 Standards-Version: 4.5.0
 
@@ -13,7 +16,6 @@ Architecture: amd64
 Depends: autopkgtest,
          qemu-system-x86,
          qemu-utils,
-         python3-psutil,
          sbuild,
          ${misc:Depends},
          ${python3:Depends},
