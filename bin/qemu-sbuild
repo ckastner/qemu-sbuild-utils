@@ -32,7 +32,6 @@ def main():
     # init options
     parser = argparse.ArgumentParser(description='QEMU-based sbuild launcher')
     parser.add_argument('--arch', action='store', default=ARCH)
-    parser.add_argument('--clean', action='store_true')
     parser.add_argument('-d', '--dist', action='store', default=DIST)
     parser.add_argument('--image', action='store')
     parser.add_argument('--autopkgtest-debug', action='store_true')
@@ -44,10 +43,10 @@ def main():
     if parsed_args.image:
         image = parsed_args.image
     else:
-        image = os.path.join(IMAGEDIR, f'{parsed_args.dist}-autopkgtest-{ARCH}')
-        if parsed_args.clean:
-            image += '-clean'
-        image += '.img'
+        image = os.path.join(
+            IMAGEDIR,
+            f'{parsed_args.dist}-autopkgtest-{ARCH}.img'
+        )
     qemu = f'qemu-system-{MACHINE}'
 
     args = [
