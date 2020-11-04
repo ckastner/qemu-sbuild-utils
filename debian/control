@@ -21,10 +21,11 @@ Depends: autopkgtest,
          ${python3:Depends},
 Description: Utilities for using sbuild with QEMU images
  These utilities facilitate the use of sbuild together with QEMU images using
- sbuild's  --chroot-mode=autopkgtest.
+ sbuild's  --chroot-mode=autopkgtest. Currently, amd64 and i386 guest
+ architectures are supported, with more in the works.
  .
  The following utilities are provided:
  .
-   * qemu-sbuild: light-weight wrapper around sbuild
-   * qemu-sbuild-update: like sbuild-update, but for QEMU images
-   * qemu-sbuild-create: image creation script (wraps autopkgtest-build-qemu)
+   * qemu-sbuild-create  Create an image suitable for building packages
+   * qemu-sbuild-update  Run apt-get update within the image
+   * qemu-sbuild         Use sbuild with the image to build a package
