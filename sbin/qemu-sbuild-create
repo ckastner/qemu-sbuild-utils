@@ -57,33 +57,67 @@ def gen_sourceslist(mirror, dist, components, with_bpo=False):
 
 
 def main():
-    if os.getuid() != 0:
-        print('Must be root to use this.', file=sys.stderr)
-        sys.exit(1)
-    os.umask(22)
-
-    parser = argparse.ArgumentParser(description='autopkgtest-build-qemu wrapper')
-    parser.add_argument('--noexec', action='store_true')
-    parser.add_argument('--arch', action='store', default=ARCH)
-    parser.add_argument('--install-packages', action='store')
-    parser.add_argument('--extra-deb', action='append')
-    parser.add_argument('--components', action='store', default='main')
-    parser.add_argument('--variant', action='store')
-    parser.add_argument('--skel', type=str, action='store')
-    parser.add_argument('--size', type=str, action='store', default='10G')
-    parser.add_argument('--mod-script', type=str, action='store', default=MOD_SCRIPT)
-    parser.add_argument('-o', '--out-file', action='store', default=OUT_FILE)
-    parser.add_argument('distribution', action='store')
-    parser.add_argument('mirror', action='store')
+    parser = argparse.ArgumentParser(
+        description="Builds images for use with qemu-sbuild and autopkgtest.",
+        epilog="Note that qemu-sbuild-create is just a simple wrapper around "
+               "autopkgtest-build-qemu(1) tailored to building use cases."
+    )
+    parser.add_argument('--arch', action='store', default=ARCH,
+        help="Architecture to use. Default is the host architecture. "
+            f"Currently supported: {', '.join(SUPPORTED_ARCHS.values())}."
+    )
+    parser.add_argument('--install-packages', action='store',
+        help="Comma-separated list of additional packages to install in the "
+             "image using 'apt-get install'."
+    )
+    parser.add_argument('--extra-deb', action='append',
+        help="Package file (.deb) from the local filesystem to install. Can "
+             "be specified more than once."
+    )
+    parser.add_argument('--components', action='store', default='main',
+        help="Comma-separated list of components to use with sources.list "
+             "entries. Default: main."
+    )
+    # Not yet merged into autopkgtest, see #973457
+    # parser.add_argument('--variant', action='store')
+    parser.add_argument('--skel', type=str, action='store',
+        help="Skeleton directory to use for /root."
+    )
+    parser.add_argument('--size', type=str, action='store', default='10G',
+        help="VM size to use. Note that the images are in qcow2 format, so "
+             "they won't consume that space right away. Default: 10G."
+    )
+    parser.add_argument('--mod-script', type=str, action='store',
+        default=MOD_SCRIPT,
+        help="Pre-finalization modification script to use (the SCRIPT "
+             "argument to autopkgtest-build-qemu) instead of the package-"
+             "supplied script. You will probably never need this."
+    )
+    parser.add_argument('-o', '--out-file', action='store', default=OUT_FILE,
+        help="Output filename. If not supplied, then "
+             "DIST-autopkgtest-ARCH.img will be used."
+    )
+    parser.add_argument('--noexec', action='store_true',
+        help="Don't actually do anything. Just print the autopkgtest-build-"
+             "qemu(1) command string that would be executed, and then exit."
+    )
+    parser.add_argument('distribution', action='store',
+        help="The distribution to install."
+    )
+    parser.add_argument('mirror', action='store',
+        help="The mirror to use for the installation. Note that the mirror "
+             "will also be used for the sources.list file in the VM. This "
+             "should fast, and ideally locally cached."
+    )
     parsed = parser.parse_args()
 
     # Internal args
     if parsed.arch not in SUPPORTED_ARCHS.values():
-        print(f'Unsupported architecture: {parsed.arch}')
+        print(f"Unsupported architecture: {parsed.arch}")
         sys.exit(1)
     if parsed.out_file == OUT_FILE:
         # Default unchanged - peplace template with instantiated name
-        out_file = f'{parsed.distribution}-autopkgtest-{parsed.arch}.img'
+        out_file = f"{parsed.distribution}-autopkgtest-{parsed.arch}.img"
     else:
         out_file = parsed.out_file
     components = parsed.components.split(',')
@@ -118,8 +152,8 @@ def main():
     ]
     if parsed.mod_script:
         args += ['--script', parsed.mod_script]
-    if parsed.variant:
-        args += ['--variant', parsed.variant]
+    #if parsed.variant:
+    #    args += ['--variant', parsed.variant]
     dist = parsed.distribution
     if dist.endswith('-backports'):
         dist = dist[:-10]
@@ -127,6 +161,11 @@ def main():
         dist,
         out_file,
     ]
+
+    if os.getuid() != 0:
+        print('Must be root to use this.', file=sys.stderr)
+        sys.exit(1)
+    os.umask(22)
 
     print(' '.join(str(a) for a in args))
     if not parsed.noexec:

@@ -27,6 +27,13 @@ build:
 		-o man/qemu-sbuild-update.1 \
 		bin/qemu-sbuild-update
 	cat doc/qemu-sbuild-update.append >> man/qemu-sbuild-update.1
+	help2man \
+		--version-string $(VERSION) \
+		-N \
+		-L C.UTF-8 \
+		-o man/qemu-sbuild-create.1 \
+		sbin/qemu-sbuild-create
+	cat doc/qemu-sbuild-create.append >> man/qemu-sbuild-create.1
 
 install:
 	install -m 755 -d $(BINDIR) $(SBINDIR) $(MANDIR)
