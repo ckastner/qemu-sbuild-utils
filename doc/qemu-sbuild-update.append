@@ -7,3 +7,8 @@ run \fBapt\-get\fR update, upgrade, clean, and finally autoremove in the image.
 The \fBimage\fR will first be treated as a path. If a file exists at that path,
 it is used. Otherwise, \fBimage\fR will be looked for in \fB$IMAGEDIR\fR, or
 \fB/var/cache/qemu\-sbuild\fR if \fB$IMAGEDIR\fR is unset.
+.SH COPYRIGHT
+Copyright \[co] 2020 Christian Kastner <ckk@kvr.at>
+.SH "SEE ALSO"
+.BR qemu\-sbuild (1),
+.BR qemu\-sbuild\-create (1).

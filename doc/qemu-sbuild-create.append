@@ -39,3 +39,8 @@ $ sudo qemu\-sbuild\-create \-\-extra\-deb FOO.deb unstable http://deb.debian.or
 .PP
 This would install the package \fBFOO.deb\fR from the local filesystem.
 Useful, for example, to install additional keyring packages.
+.SH COPYRIGHT
+Copyright \[co] 2020 Christian Kastner <ckk@kvr.at>
+.SH "SEE ALSO"
+.BR qemu\-sbuild (1),
+.BR qemu\-sbuild\-update (1).
