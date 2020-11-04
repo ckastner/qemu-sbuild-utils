@@ -43,8 +43,7 @@ bridge code does not support this yet).
 See `qemu-sbuild -h` for more info.
 
 
-qemu-sbuild-update
-------------------
+### qemu-sbuild-update
 
 An `sbuild-update` analog. Launches an image, and uses `python3-pexpect` to
 update all packages.
@@ -52,8 +51,7 @@ update all packages.
 Expects only the image name as argument.
 
 
-qemu-sbuild-create
-------------------
+### qemu-sbuild-create
 
 A light-weight wrapper around `autopkgtest-build-qemu` that simplifies setting
 some of the options, and also generated the desired `sources.list`. Ships with
@@ -61,3 +59,16 @@ a script `modscript` that is used by `autopkgtest-build-qemu` to implement some
 of the modifications.
 
 See `qemu-sbuild-create -h` for more info.
+
+
+Acceleration
+------------
+
+By adding the build user to the `kvm` group, `qemu-sbuild` can operate with
+near-native performance on systems where KVM is supported.
+
+```
+$ sudo gpasswd -a <build-user> kvm
+```
+
+
