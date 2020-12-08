@@ -106,15 +106,6 @@ def main():
              "they won't consume that space right away. Default: 10G.",
     )
     parser.add_argument(
-        '--mod-script',
-        type=str,
-        action='store',
-        default=MOD_SCRIPT,
-        help="Pre-finalization modification script to use (the SCRIPT "
-             "argument to autopkgtest-build-qemu) instead of the package-"
-             "supplied script. You will probably never need this.",
-    )
-    parser.add_argument(
         '-o', '--out-file',
         action='store',
         default=OUT_FILE,
@@ -182,9 +173,8 @@ def main():
 	'--architecture',           parsed.arch,
         '--mirror',                 parsed.mirror,
         '--size',                   parsed.size,
+        '--script',                 MOD_SCRIPT,
     ]
-    if parsed.mod_script:
-        args += ['--script', parsed.mod_script]
     #if parsed.variant:
     #    args += ['--variant', parsed.variant]
     dist = parsed.distribution
