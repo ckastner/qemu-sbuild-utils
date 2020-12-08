@@ -1,3 +1,20 @@
+qemu-sbuild-utils (0.2) unstable; urgency=medium
+
+  * qemu-sbuild-create:
+    - Add documentation for /shared mountpoint
+    - Drop --mod-script option
+    - When building for experimental, debootstrap unstable
+      This was the intention and how the man page documents it, but somehow
+      this got overlooked
+  * qemu-sbuild-update:
+    - Explicitly set DEBIAN_FRONTEND=noninteractive
+    - Add --arch option, for when auto-guessing fails
+  * qemu-sbuild:
+    - Add --overlay-dir option (needed for larger builds)
+  * all: Set NAME for man pages
+
+ -- Christian Kastner <ckk@debian.org>  Tue, 08 Dec 2020 18:26:23 +0100
+
 qemu-sbuild-utils (0.1) unstable; urgency=medium
 
   * First upload to unstable.
