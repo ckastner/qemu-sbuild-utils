@@ -11,6 +11,10 @@ import sys
 
 import pexpect
 
+SUPPORTED_ARCHS = {
+    'amd64': 'qemu-system-x86_64',
+    'i386': 'qemu-system-i386'
+}
 
 IMAGEDIR = os.environ.get('IMAGEDIR', '/var/cache/qemu-sbuild')
 
@@ -37,6 +41,8 @@ def main():
         help="Create a snapshot of the image before updating it. Useful for "
              "reproducibility purposes."
     )
+    parser.add_argument('--arch', action='store', default=None,
+        help="Architecture to use (instead of attempting to auto-guess).")
     parser.add_argument('--noexec', action='store_true',
         help="Don't actually do anything. Just print the command string that "
              "would be executed, and then exit.")
@@ -54,14 +60,20 @@ def main():
     else:
         raise ValueError('Image does not exist')
 
-    # This assumes that images are named foo-bar-ARCH.img
-    components = os.path.basename(parsed_args.image)[:-4].split('-')
-    if 'amd64' in components:
-        qemu = 'qemu-system-x86_64'
-    elif 'i386' in components:
-        qemu = 'qemu-system-i386'
+    if parsed_args.arch:
+        try:
+            qemu = SUPPORTED_ARCHS[parsed_args.arch]
+        except KeyError as e:
+            print(f'Unsupported architecture {parsed_args.arch}')
     else:
-        raise ValueError('Unsupported architecture')
+        # This assumes that images are named foo-bar-ARCH.img
+        components = os.path.basename(parsed_args.image)[:-4].split('-')
+        if 'amd64' in components:
+            qemu = 'qemu-system-x86_64'
+        elif 'i386' in components:
+            qemu = 'qemu-system-i386'
+        else:
+            raise ValueError('Could not guess architecture, please use --arch')
 
     os.environ['DEBIAN_FRONTEND'] = 'noninteractive'
     args = [
