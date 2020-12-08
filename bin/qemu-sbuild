@@ -20,7 +20,7 @@ MACHINE = platform.machine()
 try:
     ARCH = SUPPORTED_ARCHS[MACHINE]
 except KeyError as e:
-    print(f'Unsupported machine type {MACHINE}')
+    print(f'Unsupported machine type {MACHINE}', file=sys.stderr)
     sys.exit(1)
 # Defaults
 MEM = 2048

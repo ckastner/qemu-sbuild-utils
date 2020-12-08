@@ -58,13 +58,16 @@ def main():
     elif os.path.exists(os.path.join(IMAGEDIR, parsed_args.image)):
         image = os.path.join(IMAGEDIR, parsed_args.image)
     else:
-        raise ValueError('Image does not exist')
+        print('Image does not exist', file=sys.stderr)
+        sys.exit(1)
 
     if parsed_args.arch:
         try:
             qemu = SUPPORTED_ARCHS[parsed_args.arch]
         except KeyError as e:
-            print(f'Unsupported architecture {parsed_args.arch}')
+            print(f'Unsupported architecture {parsed_args.arch}',
+                  file=sys.stderr)
+            sys.exit(1)
     else:
         # This assumes that images are named foo-bar-ARCH.img
         components = os.path.basename(parsed_args.image)[:-4].split('-')
@@ -73,7 +76,9 @@ def main():
         elif 'i386' in components:
             qemu = 'qemu-system-i386'
         else:
-            raise ValueError('Could not guess architecture, please use --arch')
+             print(f'Could not guess architecture, please use --arch',
+                   file=sys.stderr)
+             sys.exit(1)
 
     os.environ['DEBIAN_FRONTEND'] = 'noninteractive'
     args = [

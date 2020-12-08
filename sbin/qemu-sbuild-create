@@ -21,7 +21,7 @@ MACHINE = platform.machine()
 try:
     ARCH = SUPPORTED_ARCHS[MACHINE]
 except KeyError as e:
-    print(f'Unsupported machine type {MACHINE}')
+    print(f'Unsupported machine type {MACHINE}', file=sys.stderr)
     sys.exit(1)
 OUT_FILE = '<dist>-autopkgtest-<arch>.img'
 MOD_SCRIPT = '/usr/lib/qemu-sbuild-create/modscript'
@@ -115,7 +115,7 @@ def main():
 
     # Internal args
     if parsed.arch not in SUPPORTED_ARCHS.values():
-        print(f"Unsupported architecture: {parsed.arch}")
+        print(f"Unsupported architecture: {parsed.arch}", file=sys.stderr)
         sys.exit(1)
     if parsed.out_file == OUT_FILE:
         # Default unchanged - peplace template with instantiated name
