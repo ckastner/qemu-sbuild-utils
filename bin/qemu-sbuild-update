@@ -63,6 +63,7 @@ def main():
     else:
         raise ValueError('Unsupported architecture')
 
+    os.environ['DEBIAN_FRONTEND'] = 'noninteractive'
     args = [
             qemu,
             '-enable-kvm',
