@@ -180,6 +180,8 @@ def main():
     dist = parsed.distribution
     if dist.endswith('-backports'):
         dist = dist[:-10]
+    elif dist == 'experimental':
+        dist = 'unstable'
     args += [
         dist,
         out_file,
