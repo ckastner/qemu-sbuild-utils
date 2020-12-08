@@ -1,3 +1,14 @@
+.SH CONSIDERATIONS
+Using a fast temporary image overlay is key to faster build times. An overlay
+created on a tmpfs would is ideal, and can speed up I/O by an order of
+magnitude,compared to a slow HDD. If \fItmp\fR or \fI$TMPDIR\fR are mountpoints
+for a tmpfs, then all should be fine by default.
+.PP
+However, tmpfs filesytems are backed by memory and swap on the host, so a build
+needing substantial disk space in the VM may fail. If this happens, the
+\-\-overlay\-dir option should be used to point to a host directory with more
+available disk space. Note that the base image itself must have been created
+with a suitable size, see the \fB\-\-size\fR option to qemu\-sbuild\-create(1).
 .SH LIMITATIONS
 Due to the nature of sbuild's \fB\-\-chroot\-mode=autopkgtest\fR, not all
 sbuild options are supported yet. In particular, getting an interactive

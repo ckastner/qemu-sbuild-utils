@@ -60,6 +60,10 @@ def main():
     parser.add_argument('--cpus', metavar='CPUs', action='store', default=CPUS,
         help="VM CPU count. Default: Number of physical cores on the host."
     )
+    parser.add_argument('--overlay-dir', action='store',
+        help="Directory for the temporary image overlay instead of "
+             "autopkgtest's default of /tmp (or $TMPDIR)."
+    )
     parser.add_argument('--noexec', action='store_true',
         help="Don't actually do anything. Just print the sbuild(1) command "
              "string that would be executed, and then exit."
@@ -93,6 +97,9 @@ def main():
         ]
     if parsed_args.autopkgtest_debug:
         args += ['--autopkgtest-virt-server-opt', '--debug']
+    if parsed_args.overlay_dir:
+        d = parsed_args.overlay_dir
+        args += ['--autopkgtest-virt-server-opt', f'--overlay_dir={d}']
 
     # Pass on the remaining arguments to sbuild
     args += unparsed_args
