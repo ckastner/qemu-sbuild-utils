@@ -15,6 +15,7 @@ build:
 	mkdir -p man/
 	help2man \
 		--version-string $(VERSION) \
+		-n "sbuild using QEMU images" \
 		-N \
 		-L C.UTF-8 \
 		-o man/qemu-sbuild.1 \
@@ -22,6 +23,7 @@ build:
 	cat doc/qemu-sbuild.append >> man/qemu-sbuild.1
 	help2man \
 		--version-string $(VERSION) \
+		-n "QEMU image updater" \
 		-N \
 		-L C.UTF-8 \
 		-o man/qemu-sbuild-update.1 \
@@ -29,6 +31,7 @@ build:
 	cat doc/qemu-sbuild-update.append >> man/qemu-sbuild-update.1
 	help2man \
 		--version-string $(VERSION) \
+		-n "QEMU image creator for sbuild" \
 		-N \
 		-L C.UTF-8 \
 		-o man/qemu-sbuild-create.1 \
