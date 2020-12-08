@@ -48,10 +48,6 @@ then
 	rm -rf $VMTMP
 fi
 
-echo "Updating GRUB menu"
-echo "GRUB_TIMEOUT=1" >> $VMROOT/etc/default/grub
-chroot $VMROOT update-grub
-
 # Mount point for a shared folder, if the VM is launched with one
 echo "Adding 9p to initramfs"
 echo -e "9p\n9pnet\n9pnet_virtio" >> $VMROOT/etc/initramfs-tools/modules
@@ -59,5 +55,9 @@ chroot $VMROOT update-initramfs -u
 echo "Adding shared folder to fstab"
 mkdir -m 755 $VMROOT/shared
 echo "qlaunch /shared 9p trans=virtio,version=9p2000.L,auto,nofail 0 0" >> $VMROOT/etc/fstab
+
+echo "Updating GRUB menu"
+echo "GRUB_TIMEOUT=1" >> $VMROOT/etc/default/grub
+chroot $VMROOT update-grub
 
 echo "### Customization of base image complete. ###"

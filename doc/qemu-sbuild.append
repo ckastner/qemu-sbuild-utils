@@ -3,16 +3,15 @@ Due to the nature of sbuild's \fB\-\-chroot\-mode=autopkgtest\fR, not all
 sbuild options are supported yet. In particular, getting an interactive
 shell, for example using \fB\-\-build\-failed\-command\fR is \fBNOT\fR possible.
 However, there are other ways to access the build environment (see below).
-
 .SH "VM ACCESS"
 sbuild's \fB\-\-chroot\-mode=autopkgtest\fR uses autopkgtest\-virt\-qemu under
 the hood, so you will find an SSH shell on port 10022 (or the first free port
 after that) if, and only if, the openssh\-server package is installed in the
 VM.
-
+.PP
 As a futher consequence of this chroot mode, what is stated in
 autopkgtest\-virt\-qemu(1) generally also holds here.
-
+.PP
 .SH EXAMPLES
 \fB$ qemu\-sbuild \-d unstable \-s \-\-arch\-all FOO.dsc\fR
 .PP

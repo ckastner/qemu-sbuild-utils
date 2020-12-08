@@ -10,6 +10,20 @@ entries for both \fBexperimental\fR and \fBunstable\fR.
 .PP
 If the distribution ends with \fB-backports\fR, \fIsources.list\fR will contain
 entries for both the distribution and its base.
+.SH "SHARING FILES"
+Among other things, autopkgtest-virt-qemu(1) has built-in support for sharing a
+directory on the host with the guest, so no further configuration should be
+necessary when accessing the VM using autopkgtest.
+.PP
+However, for cases where the VM is launched via QEMU directly, a \fI/shared\fR
+mount point for a 9p filesystem has been added to the VM's \fI/etc/fstab\fR. It
+is configured with the \fBnofail\fR option, so it will be ignored if nothing is
+being shared.
+.PP
+To share a directory on the host with the VM, QEMU should be started with
+the following additional options:
+.PP
+\fB \-virtfs path=/path/to/host/dir,local,id=shared,mount_tag=shared,security_model=none
 .SH EXAMPLES
 \fB$ sudo qemu\-sbuild\-create unstable http://deb.debian.org/debian\fR
 .PP
@@ -40,6 +54,10 @@ build dependency of the vast majority of Debian packages.
 .PP
 This would install the package \fBFOO.deb\fR from the local filesystem.
 Useful, for example, to install additional keyring packages.
+.PP
+\fB$ sudo qemu\-sbuild\-create --shared-mountpoint unstable http://deb.debian.org/debian\fR
+.PP
+This will create an image with an fstab entry for the directory \fI/shared\fR.
 .SH COPYRIGHT
 Copyright \[co] 2020 Christian Kastner <ckk@kvr.at>
 .SH "SEE ALSO"
