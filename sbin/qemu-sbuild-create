@@ -6,7 +6,6 @@
 import argparse
 import os
 import platform
-import psutil
 import sys
 import textwrap
 
@@ -21,7 +20,7 @@ MACHINE = platform.machine()
 try:
     ARCH = SUPPORTED_ARCHS[MACHINE]
 except KeyError as e:
-    print(f'Unsupported machine type {MACHINE}', file=sys.stderr)
+    print(f"Unsupported machine type {MACHINE}", file=sys.stderr)
     sys.exit(1)
 OUT_FILE = '<dist>-autopkgtest-<arch>.img'
 MOD_SCRIPT = '/usr/lib/qemu-sbuild-create/modscript'
@@ -37,22 +36,22 @@ def gen_sourceslist(mirror, dist, components, with_bpo=False):
     automatically be added.
     """
     sl = textwrap.dedent(
-        f'''\
+        f"""\
         deb     {mirror} {dist} {' '.join(components)}
         deb-src {mirror} {dist} {' '.join(components)}
-        ''')
+        """)
     if dist == 'experimental':
         sl += textwrap.dedent(
-            f'''
+            f"""
             deb     {mirror} unstable {' '.join(components)}
             deb-src {mirror} unstable {' '.join(components)}
-            ''')
+            """)
     elif dist.endswith('-backports'):
         sl += textwrap.dedent(
-            f'''
+            f"""
             deb     {mirror} {dist[:-10]} {' '.join(components)}
             deb-src {mirror} {dist[:-10]} {' '.join(components)}
-            ''')
+            """)
     return sl
 
 
@@ -61,61 +60,93 @@ def main():
         description="Builds images for use with qemu-sbuild and autopkgtest.",
         epilog="Note that qemu-sbuild-create is just a simple wrapper around "
                "autopkgtest-build-qemu(1) that automates a few additional "
-               "steps commonly performed with package-building images."
+               "steps commonly performed with package-building images.",
     )
-    parser.add_argument('--arch', action='store', default=ARCH,
+    parser.add_argument(
+        '--arch',
+        action='store',
+        default=ARCH,
         help="Architecture to use. Default is the host architecture. "
              "Currently supported architectures are: "
-            f"{', '.join(SUPPORTED_ARCHS.values())}."
+            f"{', '.join(SUPPORTED_ARCHS.values())}.",
     )
-    parser.add_argument('--install-packages', action='store',
+    parser.add_argument(
+        '--install-packages',
+        action='store',
         help="Comma-separated list of additional packages to install in the "
-             "image using 'apt-get install'."
+             "image using 'apt-get install'.",
     )
-    parser.add_argument('--extra-deb', action='append',
+    parser.add_argument(
+        '--extra-deb',
+        action='append',
         help="Package file (.deb) from the local filesystem to install. Can "
-             "be specified more than once."
+             "be specified more than once.",
     )
-    parser.add_argument('--components', action='store', default='main',
+    parser.add_argument(
+        '--components',
+        action='store',
+        default='main',
         help="Comma-separated list of components to use with sources.list "
-             "entries. Default: main."
+             "entries. Default: main.",
     )
     # Not yet merged into autopkgtest, see #973457
     # parser.add_argument('--variant', action='store')
-    parser.add_argument('--skel', type=str, action='store',
-        help="Skeleton directory to use for /root."
+    parser.add_argument(
+        '--skel',
+        type=str,
+        action='store',
+        help="Skeleton directory to use for /root.",
     )
-    parser.add_argument('--size', type=str, action='store', default='10G',
+    parser.add_argument(
+        '--size',
+        type=str,
+        action='store',
+        default='10G',
         help="VM size to use. Note that the images are in qcow2 format, so "
-             "they won't consume that space right away. Default: 10G."
+             "they won't consume that space right away. Default: 10G.",
     )
-    parser.add_argument('--mod-script', type=str, action='store',
+    parser.add_argument(
+        '--mod-script',
+        type=str,
+        action='store',
         default=MOD_SCRIPT,
         help="Pre-finalization modification script to use (the SCRIPT "
              "argument to autopkgtest-build-qemu) instead of the package-"
-             "supplied script. You will probably never need this."
+             "supplied script. You will probably never need this.",
     )
-    parser.add_argument('-o', '--out-file', action='store', default=OUT_FILE,
+    parser.add_argument(
+        '-o', '--out-file',
+        action='store',
+        default=OUT_FILE,
         help="Output filename. If not supplied, then "
-             "DIST-autopkgtest-ARCH.img will be used."
+             "DIST-autopkgtest-ARCH.img will be used.",
     )
-    parser.add_argument('--noexec', action='store_true',
+    parser.add_argument(
+        '--noexec',
+        action='store_true',
         help="Don't actually do anything. Just print the autopkgtest-build-"
-             "qemu(1) command string that would be executed, and then exit."
+             "qemu(1) command string that would be executed, and then exit.",
     )
-    parser.add_argument('distribution', action='store',
-        help="The distribution to debootstrap."
+    parser.add_argument(
+        'distribution',
+        action='store',
+        help="The distribution to debootstrap.",
     )
-    parser.add_argument('mirror', action='store',
+    parser.add_argument(
+        'mirror',
+        action='store',
         help="The mirror to use for the installation. Note that the mirror "
              "will also be used for the sources.list file in the VM. See "
-             "MIRROR below."
+             "MIRROR below.",
     )
     parsed = parser.parse_args()
 
     # Internal args
     if parsed.arch not in SUPPORTED_ARCHS.values():
-        print(f"Unsupported architecture: {parsed.arch}", file=sys.stderr)
+        print(
+            f"Unsupported architecture: {parsed.arch}",
+            file=sys.stderr,
+        )
         sys.exit(1)
     if parsed.out_file == OUT_FILE:
         # Default unchanged - peplace template with instantiated name

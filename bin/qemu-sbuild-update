@@ -21,11 +21,17 @@ IMAGEDIR = os.environ.get('IMAGEDIR', '/var/cache/qemu-sbuild')
 
 def make_snapshot(image):
     iso_stamp = datetime.datetime.now().strftime('%Y-%m-%d_%H%M%S')
-    run = subprocess.run(['qemu-img', 'snapshot', '-l', image], capture_output=True)
+    run = subprocess.run(
+        ['qemu-img', 'snapshot', '-l', image],
+        capture_output=True
+    )
     tags = [t.split()[1].decode('utf-8') for t in run.stdout.splitlines()[2:]]
 
     if iso_stamp in tags:
-        print(f'Error: snapshot for {iso_stamp} already exists.', file=sys.stderr)
+        print(
+            f"Error: snapshot for {iso_stamp} already exists.",
+            file=sys.stderr
+        )
         return False
 
     run = subprocess.run(['qemu-img', 'snapshot', '-c', iso_stamp, image])
@@ -35,20 +41,30 @@ def make_snapshot(image):
 def main():
     # init options
     parser = argparse.ArgumentParser(
-        description="sbuild-update analog for QEMU images."
+        description="sbuild-update analog for QEMU images.",
     )
-    parser.add_argument('--snapshot', action='store_true',
+    parser.add_argument(
+        '--snapshot',
+        action='store_true',
         help="Create a snapshot of the image before updating it. Useful for "
-             "reproducibility purposes."
+             "reproducibility purposes.",
     )
-    parser.add_argument('--arch', action='store', default=None,
-        help="Architecture to use (instead of attempting to auto-guess).")
-    parser.add_argument('--noexec', action='store_true',
+    parser.add_argument(
+        '--arch',
+        action='store',
+        help="Architecture to use (instead of attempting to auto-guess).",
+    )
+    parser.add_argument(
+        '--noexec',
+        action='store_true',
         help="Don't actually do anything. Just print the command string that "
-             "would be executed, and then exit.")
-    parser.add_argument('image', action='store',
+             "would be executed, and then exit.",
+    )
+    parser.add_argument(
+        'image',
+        action='store',
         help="Image path. Will be tried first as-is, and if no image exists "
-             "at that location, then $IMAGEDIR/<image> is tried."
+             "at that location, then $IMAGEDIR/<image> is tried.",
     )
 
     parsed_args = parser.parse_args()
@@ -58,15 +74,17 @@ def main():
     elif os.path.exists(os.path.join(IMAGEDIR, parsed_args.image)):
         image = os.path.join(IMAGEDIR, parsed_args.image)
     else:
-        print('Image does not exist', file=sys.stderr)
+        print("Image does not exist", file=sys.stderr)
         sys.exit(1)
 
     if parsed_args.arch:
         try:
             qemu = SUPPORTED_ARCHS[parsed_args.arch]
         except KeyError as e:
-            print(f'Unsupported architecture {parsed_args.arch}',
-                  file=sys.stderr)
+            print(
+                f"Unsupported architecture {parsed_args.arch}",
+                file=sys.stderr,
+            )
             sys.exit(1)
     else:
         # This assumes that images are named foo-bar-ARCH.img
@@ -76,9 +94,11 @@ def main():
         elif 'i386' in components:
             qemu = 'qemu-system-i386'
         else:
-             print(f'Could not guess architecture, please use --arch',
-                   file=sys.stderr)
-             sys.exit(1)
+            print(
+                f"Could not guess architecture, please use --arch",
+                file=sys.stderr,
+            )
+            sys.exit(1)
 
     os.environ['DEBIAN_FRONTEND'] = 'noninteractive'
     args = [
@@ -103,8 +123,6 @@ def main():
         child.expect('root@host:~# ')
         child.sendline('apt-get --quiet update')
         child.expect('root@host:~# ')
-        # dist-upgrade can still open dialogue boxes that are impossible to
-        # cleak away. Perhaps each sendline should be followed up by an [Enter]
         child.sendline('apt-get --quiet --assume-yes upgrade')
         child.expect('root@host:~# ')
         child.sendline('apt-get --quiet --assume-yes clean')
