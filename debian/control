@@ -1,13 +1,8 @@
 Source: qemu-sbuild-utils
-Section: devel
+Section: oldlibs
 Priority: optional
 Maintainer: Christian Kastner <ckk@debian.org>
 Build-Depends: debhelper-compat (= 12),
-               dh-python,
-               help2man,
-               python3-all,
-               python3-pexpect,
-               python3-psutil,
 Rules-Requires-Root: no
 Standards-Version: 4.5.0
 Homepage: https://github.com/ckastner/qemu-sbuild-utils
@@ -16,19 +11,8 @@ Vcs-Browser: https://github.com/ckastner/qemu-sbuild-utils
 
 Package: qemu-sbuild-utils
 Architecture: amd64
-Depends: autopkgtest,
-         qemu-system-x86,
-         qemu-utils,
-         sbuild,
+Depends: sbuild-qemu,
          ${misc:Depends},
-         ${python3:Depends},
-Description: Utilities for using sbuild with QEMU images
- These utilities facilitate the use of sbuild together with QEMU images using
- sbuild's  --chroot-mode=autopkgtest. Currently, amd64 and i386 guest
- architectures are supported, with more in the works.
- .
- The following utilities are provided:
- .
-   * qemu-sbuild-create  Create an image suitable for building packages
-   * qemu-sbuild-update  Run apt-get update within the image
-   * qemu-sbuild         Use sbuild with the image to build a package
+Description: Transitional dummy package
+ This is a dummy package to facilitate the migration to the new sbuild-qemu
+ package.
