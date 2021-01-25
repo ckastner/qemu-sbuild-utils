@@ -1,3 +1,11 @@
+qemu-sbuild-utils (0.2.1) unstable; urgency=medium
+
+  * Convert qemu-sbuild-utils to dummy transitional package.
+    This project has been integrated with sbuild as package sbuild-qemu.
+  * Add NEWS entry
+
+ -- Christian Kastner <ckk@debian.org>  Mon, 25 Jan 2021 01:27:37 +0100
+
 qemu-sbuild-utils (0.2) unstable; urgency=medium
 
   * qemu-sbuild-create:
