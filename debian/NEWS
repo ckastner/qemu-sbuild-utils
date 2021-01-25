@@ -1,0 +1,8 @@
+qemu-sbuild-utils (0.2.1) unstable; urgency=medium
+
+These utilities have been merged into the sbuild source package. They are not
+provided by the binary package sbuild-qemu.
+
+The executables have been renamed from qemu-sbuild-* to sbuild-qemu-*.
+
+ -- Christian Kastner <ckk@debian.org>  Mon, 25 Jan 2021 09:36:51 +0100
